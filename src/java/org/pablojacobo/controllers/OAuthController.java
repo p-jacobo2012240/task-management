@@ -43,10 +43,7 @@ public class OAuthController extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             this.tempUsername = request.getParameter("username");
             this.tempPasssword = request.getParameter("pass");
-            
-            System.out.println(" VALOR EN EL SEVLET DEK USERNAME " + this.tempUsername  );
-            System.out.println(" VALOR EN EL SERVLET DEL PASS " + this.tempPasssword  );
-            
+              
             this.statusAuth = SessionEnviroment
                 .getInstance()
                 .authSession(this.tempUsername, this.tempPasssword);
@@ -58,7 +55,6 @@ public class OAuthController extends HttpServlet {
             }
             response.sendRedirect("index.jsp");
             
-            System.out.println("STATUS LOGIN ::: "+ this.statusAuth );
         }
     }
 

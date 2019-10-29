@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+//SESSION ENVIROMENT
+import org.pablojacobo.lib.SessionEnviroment;
+
 /**
  *
  * @author Hackobo
@@ -21,6 +24,8 @@ import javax.servlet.http.HttpServletResponse;
 public class OAuthController extends HttpServlet {
     private String tempUsername = "";
     private String tempPasssword = "";
+    private boolean statusAuth = false;
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -37,6 +42,20 @@ public class OAuthController extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             this.tempUsername = request.getParameter("username");
             this.tempPasssword = request.getParameter("pass");
+            
+            System.out.println(" VALOR EN EL SEVLET DEK USERNAME " + this.tempUsername  );
+            System.out.println(" VALOR EN EL SERVLET DEL PASS " + this.tempPasssword  );
+            
+            this.statusAuth = SessionEnviroment
+                .getInstance()
+                .authSession(this.tempUsername, this.tempPasssword);
+            
+            if( this.statusAuth == true  ){
+                response.sendRedirect("dashboard.jsp");
+            }
+            response.sendRedirect("index.jsp");
+            
+            System.out.println("STATUS LOGIN ::: "+ this.statusAuth );
         }
     }
 

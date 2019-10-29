@@ -7,6 +7,7 @@ package org.pablojacobo.controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -51,7 +52,9 @@ public class OAuthController extends HttpServlet {
                 .authSession(this.tempUsername, this.tempPasssword);
             
             if( this.statusAuth == true  ){
-                response.sendRedirect("dashboard.jsp");
+                RequestDispatcher view = request
+                    .getRequestDispatcher("home.jsp");      
+                view.forward(request, response);
             }
             response.sendRedirect("index.jsp");
             

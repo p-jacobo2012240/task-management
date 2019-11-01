@@ -18,8 +18,8 @@ public class UserLista {
     private List<Users> listOrdered = new ArrayList();
     
     //informacion comodin
-    private String comodinNickname = "progra2";
-    private String comodinPassword = "umg123";
+    private String fakeUsername = "progra2";
+    private String fakePass = "umg123";
     
     public static UserLista getInstance(){
         if( instance == null ){
@@ -32,7 +32,7 @@ public class UserLista {
         boolean status = false;
         this.listOrdered
             .add( 
-            new Users( this.comodinNickname, this.comodinPassword));
+            new Users( this.fakeUsername, this.fakePass));
         for(int i=0; i < this.listOrdered.size(); i++){
             String tempNick = this.listOrdered.get(i).getUsername();
             String tempPass = this.listOrdered.get(i).getPass();

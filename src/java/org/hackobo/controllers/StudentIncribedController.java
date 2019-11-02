@@ -15,14 +15,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.hackobo.beans.Students;
+import org.hackobo.structs.StudentCola;
 
-import org.hackobo.structs.StudentPila;
 /**
  *
  * @author Hackobo
  */
-@WebServlet(name = "StudentInPilaController", urlPatterns = {"/StudentInPilaController"})
-public class StudentInPilaController extends HttpServlet {
+@WebServlet(name = "StudentIncribedController", urlPatterns = {"/StudentIncribedController"})
+public class StudentIncribedController extends HttpServlet {
     private String auxStuatus = ""; 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,23 +39,23 @@ public class StudentInPilaController extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             this.auxStuatus = request.getParameter("seeStudentsInPila");
-            
+             
             if( !this.auxStuatus.isEmpty()){
-                List<Students> auxPila = new ArrayList();
-                auxPila = StudentPila.getInstance().allStudents();
+                List<Students> auxCola = new ArrayList();
+                auxCola = StudentCola.getInstance().allStudentsCola();
                 
                 out.println("<link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous'>");
+                out.println("<p> Estas son todas las incripciones </p>");
                 out.println("<ul class='list-group'>");
-                for(Students s : auxPila ){
+                for(Students s : auxCola  ){
                     out.println("<li class='list-group-item' aria-disabled='true' > Carnet : " + s.getCarnet()  + "</li> ");
                     out.println("<li class='list-group-item' aria-disabled='true' > Fullname : " + s.getFullname() + "</li> ");
                     out.println("<li class='list-group-item' aria-disabled='true' > Fecha Nacimiento : " + s.getbDay() + "</li><br>");
                 }
                 out.println("</ul>");
-                out.println("<a href='colaInscriptionView.jsp' >Pasar alumno a cola de Inscripcion </a>");
+                out.println("<a href='homeView.jsp' > Regresar al menu </a>");
                 
             }
-            
         }
     }
 

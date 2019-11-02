@@ -7,29 +7,27 @@ package org.hackobo.controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import org.hackobo.beans.Users;
 
 import org.hackobo.structs.UserLista;
+
 
 /**
  *
  * @author Hackobo
  */
-@WebServlet(name = "UserController", urlPatterns = {"/UserController"})
-public class UserController extends HttpServlet {
+@WebServlet(name = "UserAddController", urlPatterns = {"/UserAddController"})
+public class UserAddController extends HttpServlet {
     private String username = "";
     private String password = "";
-    private boolean isAuth = false;
-    //Session config
-    private HttpSession session;
-    //expire session
-    private String logOut = "";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -44,25 +42,27 @@ public class UserController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            this.username = request.getParameter("u");
-            this.password = request.getParameter("p");
+            this.username = request.getParameter("username");
+            this.password = request.getParameter("pasword");
             
-            this.isAuth = UserLista
-                .getInstance()
-                .authUsers(this.username, this.password);
+            System.out.println("el username es"+ this.username);
+            System.out.println("el pas es " + this.password );
             
-            this.session = request.getSession();
-            session.setAttribute("username", username);
+            System.out.println("los valores llegaron aqui");
             
-            if( this.isAuth == true ){
-                RequestDispatcher view = request
-                    .getRequestDispatcher("homeView.jsp");      
-                view.forward(request, response);
-            }else{
-                RequestDispatcher view = request
-                    .getRequestDispatcher("index.jsp");      
-                view.forward(request, response);
+            List<Users> orderListUsers = new ArrayList();
+            UserLista.getInstance().addUser(this.username, this.password);
+            orderListUsers = UserLista.getInstance().allUsers();
+               
+      
+            out.println("<link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous'>");
+            out.println("<ul class='list-group'>");
+            for(Users u : orderListUsers ){
+                out.println("<li class='list-group-item' aria-disabled='true' > nickname : " + u.getUsername() + "</li><br> ");
+                out.println("<li class='list-group-item' aria-disabled='true' > Password : " + u.getPass() + "</li><br> ");
             }
+            out.println("</ul>");
+            out.println("<a href='homeView.jsp' >Regresar al menu </a>");
             
         }
     }
@@ -94,13 +94,6 @@ public class UserController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-         
-        this.logOut = request.getParameter("outSession");
-        if( this.logOut == "out" ){
-            this.session = request.getSession();
-            session.invalidate();
-            response.sendRedirect("index.jsp");
-        }
     }
 
     /**

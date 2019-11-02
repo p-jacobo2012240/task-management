@@ -59,6 +59,15 @@ public class UserController extends HttpServlet {
                     .getRequestDispatcher("homeView.jsp");      
                 view.forward(request, response);
             }else{
+                //<script src='https://cdn.jsdelivr.net/npm/sweetalert2@8'></script>
+                /*out.println("<script src='https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.4/sweetalert2.all.js'></script>");
+                out.println("<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>");
+                out.println("<script>");
+                out.println("$(document).ready(function(){");
+                out.println("alert('Usuario/Password Incorrecto' )  ");
+                out.println("});");
+                out.println("</script>");*/
+                
                 RequestDispatcher view = request
                     .getRequestDispatcher("index.jsp");      
                 view.forward(request, response);

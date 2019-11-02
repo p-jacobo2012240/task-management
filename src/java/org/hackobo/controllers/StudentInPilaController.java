@@ -44,6 +44,14 @@ public class StudentInPilaController extends HttpServlet {
                 List<Students> auxPila = new ArrayList();
                 auxPila = StudentPila.getInstance().allStudents();
                 
+                if( auxPila.size() <= 0 ){
+                    out.println("<link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous'>");
+                    out.println("<div class='alert alert-primary' role='alert'>");
+                    out.println(" No hay ningun registro :( ");
+                    out.println("</div>");
+                }
+                
+                
                 out.println("<link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' integrity='sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T' crossorigin='anonymous'>");
                 out.println("<ul class='list-group'>");
                 for(Students s : auxPila ){

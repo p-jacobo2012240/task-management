@@ -28,7 +28,7 @@
                     <a href="studentView.jsp"  class="btn btn-primary">Agrega un estudiante</a>
                 </li>
                 <li class="list-group-item">
-                    <a href="colaInscriptionView.jsp"  class="btn btn-primary"> Agrega un estudiante a la cola de inscripcion</a>
+                    <a href="studentsInPilaView.jsp"  class="btn btn-primary"> Agrega un estudiante a la cola de inscripcion</a>
                 </li>
                 <li class="list-group-item">
                     <a href="studentsInscribed.jsp"  class="btn btn-primary">Inscripciones</a>

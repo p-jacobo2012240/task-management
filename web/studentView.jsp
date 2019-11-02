@@ -17,16 +17,16 @@
         <form  method="post" action="StudentAddController"  >
             <div class="form-group">
                 <label for="exampleInputEmail1">Carnet</label>
-                <input type="text" name="username" class="form-control"  placeholder="Ingresa el Carnet ">
+                <input type="text" name="carnet" class="form-control"  placeholder="Ingresa el Carnet ">
     
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Nombre</label>
-                <input type="text" name="pasword" class="form-control"  placeholder="Ingresa el nombre">
+                <input type="text" name="nombre" class="form-control"  placeholder="Ingresa el nombre">
             </div>
             <div class="form-group">
                 <label for="exampleInputPassword1">Fecha de nacimiento</label>
-                <input type="date" value="2019-11-03" name="dnacimiento" class="form-control">
+                <input type="date" value="2019-11-03" name="cumple" class="form-control">
             </div>
             <button type="submit" class="btn btn-primary">Registrar</button>
         </form>

@@ -9,7 +9,7 @@ export class TaskController {
     ) {}
 
     @Get('/dummy')
-    getAllTasks() {
+    getAllTasks() : string[] {
         return this.taskService.getAllTasks()
     }
 

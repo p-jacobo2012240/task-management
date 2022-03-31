@@ -24,5 +24,24 @@ export class TaskService {
         }
         this.taskList.push(newTask);
         return newTask;
-    } 
+    }
+    
+    getTaskById(taskId: string) : Task {
+        return this.taskList.find((tsk) => tsk.id == taskId );
+    }
+
+    deleteTaskById(taskId: string) : string {
+        if(!taskId) {
+            return `cannot be null`;
+        }
+
+        const task = this.taskList.find(tsk => tsk.id == taskId);
+        if(task) {
+            this.taskList = this.taskList.filter(tsk => tsk.id != taskId);
+            return 'task deleted!';
+        } else {
+            return `task with Id: ${taskId} not exist!`;
+        }
+    }
+    
 }

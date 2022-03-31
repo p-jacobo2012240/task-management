@@ -8,9 +8,9 @@ export class TaskController {
         private taskService: TaskService
     ) {}
 
-    @Get()
+    @Get('/dummy')
     getAllTasks() {
-        this.taskService.getAllTasks()
+        return this.taskService.getAllTasks()
     }
 
 }

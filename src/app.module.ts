@@ -13,10 +13,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       type: 'postgres',
       host: 'localhost',
       port: 5432,
-      username: 'postgress',
+      username: 'postgres',
       password: 'root@2k22',
       database: 'postgres',
-      schema: 'task-management',
+      schema: 'task_management',
       autoLoadEntities: true,
       synchronize: true
     })

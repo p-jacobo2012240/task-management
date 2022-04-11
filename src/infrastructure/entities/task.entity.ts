@@ -1,8 +1,18 @@
-import { TaskStatus } from "./task-status";
+import { TaskStatus } from "src/domain/task-status.domain";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-export interface Task {
-    id: string;
+@Entity()
+export class Task {
+
+    @PrimaryGeneratedColumn()
+    taskId: string;
+
+    @Column()
     title: string;
+
+    @Column()
     description: string;
-    status: TaskStatus;
+
+    @Column()
+    status: TaskStatus
 }

@@ -2,19 +2,19 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateTaskDto } from 'src/infrastructure/dto/create-task.dto';
 import { GetTaskFilterDto } from 'src/infrastructure/dto/get-task-filter.dto';
 import { TaskStatus } from '../../../domain/task-status.domain';
-import { Task } from 'src/domain/task.domain';
+import { TaskDomain } from 'src/domain/task.domain';
 import { v4 as uuid } from 'uuid';
 
 @Injectable()
 export class TaskService {
     
-    private taskList: Task[] = [];
+    private taskList: TaskDomain[] = [];
 
-    getAllTasks(): Task[] {
+    getAllTasks(): TaskDomain[] {
         return this.taskList;
     }
 
-    getTasksWithFilters(filters: GetTaskFilterDto) : Task[] {
+    getTasksWithFilters(filters: GetTaskFilterDto) : TaskDomain[] {
         const { status, search  } = filters;
         let tasks = this.getAllTasks()
 
@@ -33,10 +33,10 @@ export class TaskService {
         return tasks;
     }
 
-    createTask(createTaskDto: CreateTaskDto) : Task {
+    createTask(createTaskDto: CreateTaskDto) : TaskDomain {
         const { title, description } = createTaskDto;
 
-        const newTask: Task = {
+        const newTask: TaskDomain = {
             id: uuid(),
             title: title,
             description: description,
@@ -46,7 +46,7 @@ export class TaskService {
         return newTask;
     }
     
-    getTaskById(taskId: string) : Task {
+    getTaskById(taskId: string) : TaskDomain {
         const task = this.taskList.find((tsk) => tsk.id == taskId );
         
         if(!task) {
@@ -61,7 +61,7 @@ export class TaskService {
         this.taskList = this.taskList.filter(tsk => task.id != taskId);
     }
 
-    updateTaskStatus(id: string, status: TaskStatus) : Task {
+    updateTaskStatus(id: string, status: TaskStatus) : TaskDomain {
         const task = this.getTaskById(id);
         task.status = status
         return task

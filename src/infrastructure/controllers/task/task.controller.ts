@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestj
 import { CreateTaskDto } from 'src/infrastructure/dto/create-task.dto';
 import { GetTaskFilterDto } from 'src/infrastructure/dto/get-task-filter.dto';
 import { UpdateTaskStatusDto } from 'src/infrastructure/dto/update-task-status.dto';
-import { Task } from 'src/domain/task.domain';
+import { TaskDomain } from 'src/domain/task.domain';
 import { TaskService } from 'src/infrastructure/services/task/task.service';
 
 @Controller('tasks')
@@ -13,7 +13,7 @@ export class TaskController {
     ) {}
 
     @Get()
-    getAllTasks(@Query() filterDto: GetTaskFilterDto) : Task[] {
+    getAllTasks(@Query() filterDto: GetTaskFilterDto) : TaskDomain[] {
         if(Object.keys(filterDto).length) {
             // if we have any filters defined, call taskService.getTasksWithFilters
             return this.taskService.getTasksWithFilters(filterDto);
@@ -24,12 +24,12 @@ export class TaskController {
     }
 
     @Post()
-    createNewTask(@Body() createTaskDto: CreateTaskDto) : Task {
+    createNewTask(@Body() createTaskDto: CreateTaskDto) : TaskDomain {
         return this.taskService.createTask(createTaskDto);
     }
 
     @Get('/:id') 
-    getTaskById(@Param('id') id: string ) : Task {
+    getTaskById(@Param('id') id: string ) : TaskDomain {
         return this.taskService.getTaskById(id);
     }
 
@@ -42,7 +42,7 @@ export class TaskController {
     updateTaskStatus(
         @Param('id') id: string, 
         @Body() updateTaskStatusDto: UpdateTaskStatusDto
-    ): Task {
+    ): TaskDomain {
         const { status } = updateTaskStatusDto;
         return this.taskService.updateTaskStatus(id, status);
     }

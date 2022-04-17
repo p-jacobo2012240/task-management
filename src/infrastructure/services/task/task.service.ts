@@ -1,13 +1,40 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateTaskDto } from 'src/infrastructure/dto/create-task.dto';
 import { GetTaskFilterDto } from 'src/infrastructure/dto/get-task-filter.dto';
+import { TaskRepositoryImpl } from 'src/infrastructure/repositories/task.repository';
 import { TaskStatus } from '../../../domain/task-status.domain';
-import { TaskDomain } from 'src/domain/task.domain';
-import { v4 as uuid } from 'uuid';
+import { TaskDtoDomain } from '../../../domain/task.dto.domain';
+import { IBaseTaskSerice } from '../base/base-task-service';
 
 @Injectable()
-export class TaskService {
+export class TaskService implements IBaseTaskSerice  {
     
+    constructor(
+        private taskRepository: TaskRepositoryImpl 
+    ) {}
+
+    async getTaskById(id: string): Promise<TaskDtoDomain> {
+        const task = await this.taskRepository.findById(Number(id))
+        
+        if(!task) {
+            throw new NotFoundException(`task with id = ${id} not found`)
+        }
+        
+        return task;
+    }
+
+    createTask(createTaskDto: CreateTaskDto) : Promise<TaskDtoDomain> {
+        const { title, description } = createTaskDto;
+
+        const newTask: TaskDtoDomain = {
+            title: title,
+            description: description,
+            status: TaskStatus.OPEN
+        }
+        return this.taskRepository.save(newTask); 
+    }
+
+    /** 
     private taskList: TaskDomain[] = [];
 
     getAllTasks(): TaskDomain[] {
@@ -33,18 +60,7 @@ export class TaskService {
         return tasks;
     }
 
-    createTask(createTaskDto: CreateTaskDto) : TaskDomain {
-        const { title, description } = createTaskDto;
-
-        const newTask: TaskDomain = {
-            id: uuid(),
-            title: title,
-            description: description,
-            status: TaskStatus.OPEN
-        }
-        this.taskList.push(newTask);
-        return newTask;
-    }
+   
     
     getTaskById(taskId: string) : TaskDomain {
         const task = this.taskList.find((tsk) => tsk.id == taskId );
@@ -66,5 +82,5 @@ export class TaskService {
         task.status = status
         return task
     }
-    
+    **/
 }

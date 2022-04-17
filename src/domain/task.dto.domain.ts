@@ -1,4 +1,12 @@
+import { TaskStatus } from "./task-status.domain";
 
 export class TaskDtoDomain {
-    // some properties
+    
+    id?: number;
+
+    title: string;
+
+    description: string;
+
+    status: TaskStatus;
 }

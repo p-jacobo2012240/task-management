@@ -1,9 +1,9 @@
 
 export interface IBaseRepository<T, V> {
 
-    save(entity: T) : T;
+    save(domain: T) : Promise<T>;
 
-    findById(param: V ) : T; 
+    findById(param: V ) : Promise<T>; 
 
     findAll(params: V) : Array<T>;
 

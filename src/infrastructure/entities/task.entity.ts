@@ -5,7 +5,7 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 export class Task {
 
     @PrimaryGeneratedColumn()
-    taskId: string;
+    taskId: number;
 
     @Column()
     title: string;

@@ -1,19 +1,18 @@
 import { InjectRepository } from "@nestjs/typeorm";
-import { TaskDomain } from "../../domain/task.domain";
 import { Repository } from "typeorm";
 import { CreateTaskDto } from "../dto/create-task.dto";
 import { Task } from "../entities/task.entity";
+import { TaskRepository } from "src/application/repositories/Itask-repository";
+import { TaskDtoDomain } from "src/domain/task.dto.domain";
 
-
-export class TaskRepository  {
+export class TaskRepositoryImpl implements TaskRepository  {
 
     constructor(
         @InjectRepository(Task) private taskRepository: Repository<Task>,
     ) {}
-    
 
-    public createTask(createTaskDto: CreateTaskDto) : void { // check and change interface to class
-        this.taskRepository.save(createTaskDto)
-    }
-    
+    save: (entity: TaskDtoDomain) => TaskDtoDomain;
+    findById: (param: number) => number;
+    findAll: (params: number) => TaskDtoDomain[];
+    delete: (param: number) => void;
 }

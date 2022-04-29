@@ -22,6 +22,11 @@ export class TaskController {
         return this.taskService.createTask(createTaskDto);
     }
 
+    @Delete('/:id')
+    deleteTaskById(@Param('id') id: string ) : void {
+        this.taskService.deleteTaskById(id);
+    }
+
     /**@Get()
     getAllTasks(@Query() filterDto: GetTaskFilterDto) : TaskDomain[] {
         if(Object.keys(filterDto).length) {
@@ -36,11 +41,6 @@ export class TaskController {
     @Get('/:id') 
     getTaskById(@Param('id') id: string ) : TaskDomain {
         return this.taskService.getTaskById(id);
-    }
-
-    @Delete('/:id')
-    deleteTaskById(@Param('id') id: string ) : void {
-        return this.taskService.deleteTaskById(id);
     }
 
     @Patch('/:id/status')

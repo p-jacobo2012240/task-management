@@ -33,7 +33,7 @@ export class TaskRepositoryImpl implements TaskRepository  {
         throw new Error("Method not implemented.");
     }
 
-    delete(param: number): void {
-        this.taskRepository.delete(param)
+    async delete(param: number): Promise<void> {
+        await this.taskRepository.delete({ taskId: param }) 
     }
 }

@@ -7,5 +7,5 @@ export interface IBaseRepository<T, V> {
 
     findAll(params: V) : Array<T>;
 
-    delete(param: V) : void;
+    delete(param: V) :  Promise<void>;
 }

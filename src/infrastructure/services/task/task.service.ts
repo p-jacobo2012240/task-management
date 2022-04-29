@@ -34,6 +34,10 @@ export class TaskService implements IBaseTaskSerice  {
         return this.taskRepository.save(newTask); 
     }
 
+    deleteTaskById(taskId: string) : void {
+        this.taskRepository.delete(Number(taskId));
+    }
+
     /** 
     private taskList: TaskDomain[] = [];
 
@@ -72,10 +76,6 @@ export class TaskService implements IBaseTaskSerice  {
         return task;
     }
 
-    deleteTaskById(taskId: string) : void {
-        const task = this.getTaskById(taskId);
-        this.taskList = this.taskList.filter(tsk => task.id != taskId);
-    }
 
     updateTaskStatus(id: string, status: TaskStatus) : TaskDomain {
         const task = this.getTaskById(id);

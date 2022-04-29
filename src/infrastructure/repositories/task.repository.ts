@@ -1,9 +1,10 @@
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { Brackets, Repository } from "typeorm";
 import { Task } from "../entities/task.entity";
 import { TaskRepository } from "../../application/repositories/task-repository";
 import { TaskDtoDomain } from "src/domain/task.dto.domain";
-import { TaskDtoMapper } from "../mappers/tast.dto.mapper";
+import { TaskDtoMapper } from "../mappers/task.dto.mapper";
+import { GetTaskFilterDto } from "../dto/get-task-filter.dto";
 
 export class TaskRepositoryImpl implements TaskRepository  {
 
@@ -11,7 +12,30 @@ export class TaskRepositoryImpl implements TaskRepository  {
         @InjectRepository(Task) private taskRepository: Repository<Task>,
         private taskDtoMapper: TaskDtoMapper
     ) {}
-    
+     
+    async getAllTaskWithQuery(filterDto: GetTaskFilterDto): Promise<TaskDtoDomain[]> {
+        const { status, search } = filterDto;
+        
+        const query = this.taskRepository.createQueryBuilder('task')
+        
+        if (status) {
+            query.andWhere('status = :status', { status });
+        }
+
+        if (search) {
+            query.andWhere(
+              new Brackets((qb) => {
+                qb.where('title ILIKE :search OR description ILIKE :search', {
+                  search: `%${search}%`,
+                });
+              }),
+            );
+        }
+
+        const tasks = await query.getMany();
+        return tasks;
+    }   
+
     async save(domain: TaskDtoDomain): Promise<TaskDtoDomain> {
         const { title, description, status } = domain; 
 
@@ -30,10 +54,12 @@ export class TaskRepositoryImpl implements TaskRepository  {
     }
 
     findAll(params: number): TaskDtoDomain[] {
+        // this method are not use because there create custom findAll with filters
         throw new Error("Method not implemented.");
     }
 
-    async delete(param: number): Promise<void> {
-        await this.taskRepository.delete({ taskId: param }) 
+    async delete(param: number): Promise<number> {
+        const rowAffected = this.taskRepository.delete({ taskId: param });
+        return (await rowAffected).affected
     }
 }

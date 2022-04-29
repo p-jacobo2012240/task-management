@@ -12,45 +12,30 @@ export class TaskController {
         private taskService: TaskService
     ) {}
 
+    @Get() 
+    getAllTasks(@Query() filterDto: GetTaskFilterDto):  Promise<TaskDtoDomain[]> {
+        return this.taskService.getAllTasks(filterDto);
+    }
+
     @Get('/:id') 
-    getTaskById(@Param('id') id: string ) : Promise<TaskDtoDomain> {
+    getTaskById(@Param('id') id: string ): Promise<TaskDtoDomain> {
         return this.taskService.getTaskById(id);
     }
 
     @Post()
-    createNewTask(@Body() createTaskDto: CreateTaskDto) : Promise<TaskDtoDomain> {
+    createNewTask(@Body() createTaskDto: CreateTaskDto): Promise<TaskDtoDomain> {
         return this.taskService.createTask(createTaskDto);
     }
 
     @Delete('/:id')
-    deleteTaskById(@Param('id') id: string ) : void {
-        this.taskService.deleteTaskById(id);
+    deleteTaskById(@Param('id') id: string ): Promise<void> {
+        return this.taskService.deleteTaskById(id);
     }
 
-    /**@Get()
-    getAllTasks(@Query() filterDto: GetTaskFilterDto) : TaskDomain[] {
-        if(Object.keys(filterDto).length) {
-            // if we have any filters defined, call taskService.getTasksWithFilters
-            return this.taskService.getTasksWithFilters(filterDto);
-        } else {
-            // otherwise, just get all tasks
-            return this.taskService.getAllTasks()
-        }
-    }
-
-    @Get('/:id') 
-    getTaskById(@Param('id') id: string ) : TaskDomain {
-        return this.taskService.getTaskById(id);
-    }
 
     @Patch('/:id/status')
-    updateTaskStatus(
-        @Param('id') id: string, 
-        @Body() updateTaskStatusDto: UpdateTaskStatusDto
-    ): TaskDomain {
+    updateTaskStatus(@Param('id') id: string, @Body() updateTaskStatusDto: UpdateTaskStatusDto): Promise<TaskDtoDomain> {
         const { status } = updateTaskStatusDto;
         return this.taskService.updateTaskStatus(id, status);
     }
-    **/
-
 }

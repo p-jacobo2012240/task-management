@@ -12,6 +12,10 @@ export class TaskService implements IBaseTaskSerice  {
     constructor(
         private taskRepository: TaskRepositoryImpl 
     ) {}
+    
+    async getAllTasks(filterDto: GetTaskFilterDto): Promise<TaskDtoDomain[]> {
+       return await this.taskRepository.getAllTaskWithQuery(filterDto);
+    }
 
     async getTaskById(id: string): Promise<TaskDtoDomain> {
         const task = await this.taskRepository.findById(Number(id))
@@ -35,12 +39,19 @@ export class TaskService implements IBaseTaskSerice  {
     }
 
     async deleteTaskById(taskId: string) : Promise<void> {
-        const task = await this.taskRepository.findById(Number(taskId))
-        
-        if(!task) {
+        const affected = await this.taskRepository.delete(Number(taskId));
+
+        if(affected === 0) {
             throw new NotFoundException(`task with id = ${taskId} not found`)
         }
-        this.taskRepository.delete(Number(taskId));
+    }
+
+    async updateTaskStatus(id: string, status: TaskStatus) : Promise<TaskDtoDomain> {
+        const task = await this.getTaskById(id);
+        
+        task.status = status
+        await this.taskRepository.save(task); 
+        return task
     }
 
     /** 
@@ -68,24 +79,6 @@ export class TaskService implements IBaseTaskSerice  {
         }
         return tasks;
     }
-
    
-    
-    getTaskById(taskId: string) : TaskDomain {
-        const task = this.taskList.find((tsk) => tsk.id == taskId );
-        
-        if(!task) {
-            throw new NotFoundException(`task with id = ${taskId} not found`)
-        }
-        
-        return task;
-    }
-
-
-    updateTaskStatus(id: string, status: TaskStatus) : TaskDomain {
-        const task = this.getTaskById(id);
-        task.status = status
-        return task
-    }
     **/
 }

@@ -34,7 +34,12 @@ export class TaskService implements IBaseTaskSerice  {
         return this.taskRepository.save(newTask); 
     }
 
-    deleteTaskById(taskId: string) : void {
+    async deleteTaskById(taskId: string) : Promise<void> {
+        const task = await this.taskRepository.findById(Number(taskId))
+        
+        if(!task) {
+            throw new NotFoundException(`task with id = ${taskId} not found`)
+        }
         this.taskRepository.delete(Number(taskId));
     }
 

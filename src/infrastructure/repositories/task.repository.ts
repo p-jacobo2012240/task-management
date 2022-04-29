@@ -34,6 +34,6 @@ export class TaskRepositoryImpl implements TaskRepository  {
     }
 
     delete(param: number): void {
-        throw new Error("Method not implemented.");
+        this.taskRepository.delete(param)
     }
 }

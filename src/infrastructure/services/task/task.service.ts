@@ -53,32 +53,4 @@ export class TaskService implements IBaseTaskSerice  {
         await this.taskRepository.save(task); 
         return task
     }
-
-    /** 
-    private taskList: TaskDomain[] = [];
-
-    getAllTasks(): TaskDomain[] {
-        return this.taskList;
-    }
-
-    getTasksWithFilters(filters: GetTaskFilterDto) : TaskDomain[] {
-        const { status, search  } = filters;
-        let tasks = this.getAllTasks()
-
-        if(status) {
-            tasks = this.taskList.filter(tsk => tsk.status === status)
-        }
-
-        if(search) {
-            tasks = tasks.filter((tsk) => {
-                if(tsk.title.includes(search) || tsk.description.includes(search)) {
-                    return true
-                }
-                return false;
-            });
-        }
-        return tasks;
-    }
-   
-    **/
 }

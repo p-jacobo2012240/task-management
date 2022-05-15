@@ -5,14 +5,16 @@ import { Task } from './entities/task.entity';
 import { TaskDtoMapper } from './mappers/task.dto.mapper';
 import { TaskRepositoryImpl } from './repositories/task.repository';
 import { TaskService } from './services/task/task.service';
+import { AuthService } from './services/auth/auth.service';
 
 @Module({
     imports: [TypeOrmModule.forFeature([Task])],
     controllers: [TaskController],
     providers: [
-        TaskService, 
+        TaskService,
+        AuthService, 
         TaskRepositoryImpl, 
-        TaskDtoMapper
+        TaskDtoMapper, AuthService
     ],
     exports: [TaskService]
 })

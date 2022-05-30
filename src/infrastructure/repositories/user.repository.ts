@@ -3,6 +3,8 @@ import { UserRepository } from "src/application/repositories/user-repository";
 import { UserDtoDomain } from "src/domain/user.dto.domain";
 import { Repository } from "typeorm";
 import { User } from "../entities/user.entity";
+import * as bcrypt from 'bcrypt';
+
 
 export class UserRepositoryImpl implements UserRepository {
     
@@ -13,9 +15,15 @@ export class UserRepositoryImpl implements UserRepository {
     async save(domain: UserDtoDomain): Promise<UserDtoDomain> {
         const { username, password } = domain;
 
+        const salt = await bcrypt.genSalt();
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        console.log('salt', salt);
+        console.log('hashedPassword', hashedPassword );
+
         const entity = new User();
         entity.username = username;
-        entity.password = password;
+        entity.password = hashedPassword;
 
         await this.userRepository.save(entity);
         return new Promise((resolve, reject) => resolve(entity));

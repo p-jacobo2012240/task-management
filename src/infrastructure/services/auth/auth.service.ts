@@ -5,6 +5,7 @@ import { AuthCredentials } from 'src/infrastructure/dto/auth-credentials.dto';
 import { UserRepositoryImpl } from 'src/infrastructure/repositories/user.repository';
 import { IBaseUserService } from '../base/base-user-service';
 import * as bcrypt from 'bcrypt';
+import { User } from 'src/infrastructure/entities/user.entity';
 
 @Injectable()
 export class AuthService implements IBaseUserService {
@@ -15,7 +16,7 @@ export class AuthService implements IBaseUserService {
 
     async signIn(authCredentials: AuthCredentials): Promise<UserDtoDomain> {
         const { username, password } = authCredentials;
-        const user = await this.userRepository.findByCredentials(username, password);
+        const user: User = await this.userRepository.findByCredentials(username, password);
         
         if( user && (await bcrypt.compare(password, user.password))){
             return user;

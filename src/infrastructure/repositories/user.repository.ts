@@ -4,16 +4,17 @@ import { UserDtoDomain } from "src/domain/user.dto.domain";
 import { Repository } from "typeorm";
 import { User } from "../entities/user.entity";
 import * as bcrypt from 'bcrypt';
-
+import { UserDtoMapper } from '../mappers/user.dto.mapper'; 
 
 export class UserRepositoryImpl implements UserRepository {
     
     constructor(
-        @InjectRepository(User) private userRepository: Repository<User>
+        @InjectRepository(User) private userRepository: Repository<User>,
+        private userDtoMapper: UserDtoMapper
     ) {}
 
-    async findByCredentials(username: string, password: string): Promise<UserDtoDomain> {
-        throw new Error("Method not implemented.");
+    async findByCredentials(username: string, password: string): Promise<User> {
+        return this.userRepository.findOne({ where: { username: username }})
     }
 
     async save(domain: UserDtoDomain): Promise<UserDtoDomain> {

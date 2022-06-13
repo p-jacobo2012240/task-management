@@ -9,6 +9,7 @@ import { AuthService } from './services/auth/auth.service';
 import { User } from './entities/user.entity';
 import { AuthController } from './controllers/auth/auth.controller';
 import { UserRepositoryImpl } from './repositories/user.repository';
+import { UserDtoMapper } from './mappers/user.dto.mapper';
 
 @Module({
     imports: [TypeOrmModule.forFeature([Task, User])],
@@ -18,6 +19,7 @@ import { UserRepositoryImpl } from './repositories/user.repository';
         AuthService, 
         TaskRepositoryImpl, 
         TaskDtoMapper, 
+        UserDtoMapper,
         AuthService,
         UserRepositoryImpl
     ],

@@ -8,7 +8,7 @@ export class AuthController {
 
     constructor(
         private authService: AuthService
-    ) {}
+    ) {} 
 
     @Post('/signup')
     signup(@Body() authCredentials: AuthCredentials): Promise<UserDtoDomain> {

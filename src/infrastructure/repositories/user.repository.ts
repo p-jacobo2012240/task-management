@@ -12,6 +12,10 @@ export class UserRepositoryImpl implements UserRepository {
         @InjectRepository(User) private userRepository: Repository<User>
     ) {}
 
+    async findByCredentials(username: string, password: string): Promise<UserDtoDomain> {
+        throw new Error("Method not implemented.");
+    }
+
     async save(domain: UserDtoDomain): Promise<UserDtoDomain> {
         const { username, password } = domain;
 

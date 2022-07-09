@@ -10,9 +10,20 @@ import { User } from './entities/user.entity';
 import { AuthController } from './controllers/auth/auth.controller';
 import { UserRepositoryImpl } from './repositories/user.repository';
 import { UserDtoMapper } from './mappers/user.dto.mapper';
+import { PassportModule } from '@nestjs/passport';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Task, User])],
+    imports: [
+        PassportModule.register({ defaultStrategy: 'jwt'}),
+        JwtModule.register({
+            secret: 'hckSecret',
+            signOptions: {
+                expiresIn: 3600
+            }
+        }),
+        TypeOrmModule.forFeature([Task, User]),
+    ],
     controllers: [TaskController, AuthController],
     providers: [
         TaskService,

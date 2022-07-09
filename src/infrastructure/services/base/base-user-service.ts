@@ -5,5 +5,5 @@ export interface IBaseUserService {
 
     signUp(AuthCredentials: AuthCredentials): Promise<UserDtoDomain>;
 
-    signIn(AuthCredentials: AuthCredentials): Promise<UserDtoDomain>;
+    signIn(AuthCredentials: AuthCredentials): Promise<any>; // TEMP 
 }

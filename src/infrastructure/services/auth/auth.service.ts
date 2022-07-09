@@ -6,20 +6,25 @@ import { UserRepositoryImpl } from 'src/infrastructure/repositories/user.reposit
 import { IBaseUserService } from '../base/base-user-service';
 import * as bcrypt from 'bcrypt';
 import { User } from 'src/infrastructure/entities/user.entity';
+import { JwtService } from '@nestjs/jwt';
+import { JwtPayload } from 'src/domain/jwt-payload.domain';
 
 @Injectable()
 export class AuthService implements IBaseUserService {
     
     constructor(
-        private userRepository: UserRepositoryImpl
+        private userRepository: UserRepositoryImpl,
+        private jwtService: JwtService
     ) {}
 
-    async signIn(authCredentials: AuthCredentials): Promise<UserDtoDomain> {
+    async signIn(authCredentials: AuthCredentials): Promise<{ accessToken: string }> {
         const { username, password } = authCredentials;
         const user: User = await this.userRepository.findByCredentials(username, password);
         
-        if( user && (await bcrypt.compare(password, user.password))){
-            return user;
+        if( user && (await bcrypt.compare(password, user.password))) {
+            const payload: JwtPayload = { username: user.username }
+            const accessToken: string = await this.jwtService.sign(payload);
+            return { accessToken };
         } else {
             throw new UnauthorizedException('Please check your login credentials')
         }

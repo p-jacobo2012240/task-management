@@ -12,6 +12,7 @@ import { UserRepositoryImpl } from './repositories/user.repository';
 import { UserDtoMapper } from './mappers/user.dto.mapper';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
+import { JwtStrategy } from './jwt-strategy';
 
 @Module({
     imports: [
@@ -32,11 +33,13 @@ import { JwtModule } from '@nestjs/jwt';
         TaskDtoMapper, 
         UserDtoMapper,
         AuthService,
-        UserRepositoryImpl
+        UserRepositoryImpl,
+        JwtStrategy
     ],
     exports: [
         TaskService, 
-        AuthService
+        AuthService,
+        JwtStrategy,
     ]
 })
 export class InfrastructureModule {}

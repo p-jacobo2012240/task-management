@@ -4,7 +4,6 @@ import { ExtractJwt, Strategy } from "passport-jwt";
 import { JwtPayload } from '../domain/jwt-payload.domain';
 import { User } from 'src/infrastructure/entities/user.entity';
 import { UserRepositoryImpl } from "./repositories/user.repository";
-import { use } from "passport";
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {

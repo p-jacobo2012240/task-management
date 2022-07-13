@@ -14,8 +14,8 @@ export class TaskService implements IBaseTaskSerice  {
         private taskRepository: TaskRepositoryImpl 
     ) {}
     
-    async getAllTasks(filterDto: GetTaskFilterDto): Promise<TaskDtoDomain[]> {
-       return await this.taskRepository.getAllTaskWithQuery(filterDto);
+    async getAllTasks(filterDto: GetTaskFilterDto, user: User): Promise<TaskDtoDomain[]> {
+       return await this.taskRepository.getAllTaskWithQuery(filterDto, user);
     }
 
     async getTaskById(id: string): Promise<TaskDtoDomain> {

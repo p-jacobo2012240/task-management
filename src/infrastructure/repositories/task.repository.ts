@@ -5,6 +5,7 @@ import { TaskRepository } from "../../application/repositories/task-repository";
 import { TaskDtoDomain } from "src/domain/task.dto.domain";
 import { TaskDtoMapper } from "../mappers/task.dto.mapper";
 import { GetTaskFilterDto } from "../dto/get-task-filter.dto";
+import { User } from "../entities/user.entity";
 
 export class TaskRepositoryImpl implements TaskRepository  {
 
@@ -13,10 +14,11 @@ export class TaskRepositoryImpl implements TaskRepository  {
         private taskDtoMapper: TaskDtoMapper
     ) {}
      
-    async getAllTaskWithQuery(filterDto: GetTaskFilterDto): Promise<TaskDtoDomain[]> {
+    async getAllTaskWithQuery(filterDto: GetTaskFilterDto, user: User): Promise<TaskDtoDomain[]> {
         const { status, search } = filterDto;
         
         const query = this.taskRepository.createQueryBuilder('task')
+        query.where({ user })
         
         if (status) {
             query.andWhere('status = :status', { status });

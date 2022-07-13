@@ -8,7 +8,7 @@ export interface IBaseTaskSerice {
 
     getTaskById(id: string): Promise<TaskDtoDomain>;
 
-    getAllTasks(filterDto: GetTaskFilterDto): Promise<TaskDtoDomain[]>
+    getAllTasks(filterDto: GetTaskFilterDto, user: User ): Promise<TaskDtoDomain[]>
 
     createTask(createTaskDto: CreateTaskDto,  user: User ) : Promise<TaskDtoDomain>;
 

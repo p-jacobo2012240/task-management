@@ -1,3 +1,4 @@
+import { User } from "src/infrastructure/entities/user.entity";
 import { TaskStatus } from "./task-status.domain";
 
 export class TaskDtoDomain {
@@ -9,4 +10,6 @@ export class TaskDtoDomain {
     description: string;
 
     status: TaskStatus;
+
+    user: User;
 }

@@ -5,6 +5,8 @@ import { UpdateTaskStatusDto } from 'src/infrastructure/dto/update-task-status.d
 import { TaskDtoDomain } from '../../../domain/task.dto.domain';
 import { TaskService } from 'src/infrastructure/services/task/task.service';
 import { AuthGuard } from '@nestjs/passport';
+import { GetUser } from 'src/infrastructure/get-user.decorator';
+import { User } from 'src/infrastructure/entities/user.entity';
 
 @Controller('tasks')
 @UseGuards(AuthGuard())
@@ -25,8 +27,11 @@ export class TaskController {
     }
 
     @Post()
-    createNewTask(@Body() createTaskDto: CreateTaskDto): Promise<TaskDtoDomain> {
-        return this.taskService.createTask(createTaskDto);
+    createNewTask(
+        @Body() createTaskDto: CreateTaskDto,
+        @GetUser() user: User
+    ): Promise<TaskDtoDomain> {
+        return this.taskService.createTask(createTaskDto, user);
     }
 
     @Delete('/:id')

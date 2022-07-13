@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateTaskDto } from 'src/infrastructure/dto/create-task.dto';
 import { GetTaskFilterDto } from 'src/infrastructure/dto/get-task-filter.dto';
+import { User } from 'src/infrastructure/entities/user.entity';
 import { TaskRepositoryImpl } from 'src/infrastructure/repositories/task.repository';
 import { TaskStatus } from '../../../domain/task-status.domain';
 import { TaskDtoDomain } from '../../../domain/task.dto.domain';
@@ -27,14 +28,16 @@ export class TaskService implements IBaseTaskSerice  {
         return task;
     }
 
-    createTask(createTaskDto: CreateTaskDto) : Promise<TaskDtoDomain> {
+    createTask(createTaskDto: CreateTaskDto, user: User ) : Promise<TaskDtoDomain> {
         const { title, description } = createTaskDto;
 
         const newTask: TaskDtoDomain = {
             title: title,
             description: description,
-            status: TaskStatus.OPEN
+            status: TaskStatus.OPEN,
+            user: user
         }
+        
         return this.taskRepository.save(newTask); 
     }
 

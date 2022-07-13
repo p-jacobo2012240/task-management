@@ -37,12 +37,13 @@ export class TaskRepositoryImpl implements TaskRepository  {
     }   
 
     async save(domain: TaskDtoDomain): Promise<TaskDtoDomain> {
-        const { title, description, status } = domain; 
+        const { title, description, status, user } = domain; 
 
         const entity = new Task();
         entity.description = description;
         entity.title = title;
-        entity.status = status;  
+        entity.status = status;
+        entity.user = user;
         
         await this.taskRepository.save(entity);
         return new Promise((resolve, reject) => resolve(domain));
